@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Your To-Do List</h2>
+<form method="POST">
+    <input type="text" name="task_name" placeholder="Add new task">
+    <button type="submit">Add Task</button>
+</form>
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.task_name }} 
+            {% if task.is_done %}(Done){% endif %}
+            <a href="{{ url_for('delete_task', task_id=task.id) }}">Delete</a>
+            <a href="{{ url_for('mark_done', task_id=task.id) }}">Mark as {{ 'Undone' if task.is_done else 'Done' }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}
